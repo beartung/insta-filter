@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">InstaDemo</string>
+    <string name="app_name">InstaFilters</string>
     <string name="filter_normal">NORMAL</string>
     <string name="filter_amaro">AMARO</string>
     <string name="filter_rise">RISE</string>

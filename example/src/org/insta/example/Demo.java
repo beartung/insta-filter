@@ -18,6 +18,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -60,6 +63,8 @@ public class Demo extends ActionBarActivity implements ViewPager.OnPageChangeLis
 
     @InjectView(R.id.tabs) PagerSlidingTabStrip tabs;
 
+    @InjectView(R.id.link) TextView link;
+
     FilterPageAdapter adapter;
 
     HandlerThread thread;
@@ -98,6 +103,9 @@ public class Demo extends ActionBarActivity implements ViewPager.OnPageChangeLis
         handler = new Handler(thread.getLooper(), this);
 
         Picasso.with(this).load(R.drawable.hhkb).into(this);
+
+        link.setText(Html.fromHtml("<a href=\"https://github.com/beartung/insta-filter\">insta-filter@github</a>"));
+        link.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
 
