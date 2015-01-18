@@ -19,4 +19,6 @@
     <string name="filter_nashville">NASHVILLE</string>
     <string name="filter_1977">1977</string>
     <string name="filter_lordkelvin">LORDKELVIN</string>
+    <string name="save">Save</string>
+    <string name="save_tip">The filtered image saved to %1$s</string>
 </resources>

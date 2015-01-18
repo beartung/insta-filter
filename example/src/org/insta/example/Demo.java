@@ -7,7 +7,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
+import android.media.MediaScannerConnection;
+
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -19,10 +22,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +37,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 
@@ -55,7 +62,9 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
 import org.insta.InstaFilter;
 
 public class Demo extends ActionBarActivity implements ViewPager.OnPageChangeListener, Target, Handler.Callback { 
+
     private static final int MSG_SWITH_FILTER = 1001;
+    private static final int MSG_SAVE_IMAGE = 1002;
 
     @InjectView(R.id.image) GPUImageView mImageView;
 
@@ -202,8 +211,67 @@ public class Demo extends ActionBarActivity implements ViewPager.OnPageChangeLis
                     e.printStackTrace();
                 }
                 break;
+            case MSG_SAVE_IMAGE:
+                saveBitmap();
+                break;
         }
         return true;
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.save, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.save:
+                handler.sendMessage(handler.obtainMessage(MSG_SAVE_IMAGE));
+                break;
+        }
+        return true;
+    }
+
+    void saveBitmap() {
+        BufferedOutputStream bos = null;
+        try {
+
+            String rootDir = "";
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                rootDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            } else {
+                rootDir = getFilesDir().getAbsolutePath();
+            }
+
+            if (!TextUtils.isEmpty(rootDir)) {
+
+                String saveDir = rootDir + File.separator + "instafilters";
+                File dir = new File(saveDir);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                String tmpFilePath = saveDir + File.separator + System.currentTimeMillis() + ".jpg";
+                File tmpFile = new File(tmpFilePath);
+                Bitmap bitmap = mImageView.capture();
+                bos = new BufferedOutputStream(new FileOutputStream(tmpFilePath));
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 85, bos);
+                bitmap.recycle();
+                MediaScannerConnection.scanFile(this, new String[]{tmpFilePath}, new String[]{"image/jpg"}, null);
+                Toast.makeText(this, getString(R.string.save_tip, tmpFilePath), Toast.LENGTH_LONG).show();
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (Exception e2) {
+                }
+            }
+        }
     }
 
 }
