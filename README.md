@@ -1,6 +1,6 @@
 # Instagram like image filters for Android
 
-![Gif](https://github.com/beartung/insta-filter/raw/master/instafilter.jpg)
+![Gif](https://github.com/beartung/insta-filter/raw/master/instafilter.gif)
 
 ## Sample Application
 The sample application (the source is in the repository) has been published onto Google Play for easy access:
