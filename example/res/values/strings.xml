@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Demo</string>
+    <string name="app_name">InstaDemo</string>
+    <string name="filter_normal">NORMAL</string>
+    <string name="filter_amaro">AMARO</string>
+    <string name="filter_rise">RISE</string>
+    <string name="filter_hudson">HUDSON</string>
+    <string name="filter_xproii">XPROII</string>
+    <string name="filter_sierra">SIERRA</string>
+    <string name="filter_lomo">LOMOFI</string>
+    <string name="filter_earlybird">EARLYBIRD</string>
+    <string name="filter_sutro">SUTRO</string>
+    <string name="filter_toaster">TOASTER</string>
+    <string name="filter_brannan">BRANNAN</string>
+    <string name="filter_inkwell">INKWELL</string>
+    <string name="filter_walden">WALDEN</string>
+    <string name="filter_hefe">HEFE</string>
+    <string name="filter_valencia">VALENCIA</string>
+    <string name="filter_nashville">NASHVILLE</string>
+    <string name="filter_1977">1977</string>
+    <string name="filter_lordkelvin">LORDKELVIN</string>
 </resources>

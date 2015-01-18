@@ -19,113 +19,7 @@ import jp.co.cyberagent.android.gpuimage.OpenGlUtils;
 import jp.co.cyberagent.android.gpuimage.Rotation;
 import jp.co.cyberagent.android.gpuimage.util.TextureRotationUtil;
 
-public class InstaFilter extends GPUImageFilter {
-
-    private static final int FILTER_NUM = 18;
-    private static InstaFilter[] filters;
-    private static Bitmap overlayBitmap;
-
-    public static Bitmap getOverlayBitmap(Context context) {
-        if (overlayBitmap == null || overlayBitmap.isRecycled()) {
-            overlayBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.overlay_map);
-        }
-        return overlayBitmap;
-    }
-
-    private static Bitmap vignetteBitmap;
-
-    public static Bitmap getVignetteBitmap(Context context) {
-        if (vignetteBitmap == null || vignetteBitmap.isRecycled()) {
-            vignetteBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.vignette_map);
-        }
-        return vignetteBitmap;
-    }
-
-    public static InstaFilter getFilter(Context context, int index) {
-        if (filters == null) {
-            filters = new InstaFilter[FILTER_NUM];
-        }
-        try {
-            /*
-            if (filters[index] != null) {
-                return filters[index];
-            }
-            */
-
-            switch (index){
-                case 0:
-                    filters[index] = new IFNormalFilter(context);
-                    break;
-                case 1:
-                    filters[index] = new IFAmaroFilter(context);
-                    break;
-                case 2:
-                    filters[index] = new IFRiseFilter(context);
-                    break;
-                case 3:
-                    filters[index] = new IFHudsonFilter(context);
-                    break;
-                case 4:
-                    filters[index] = new IFXproIIFilter(context);
-                    break;
-                case 5:
-                    filters[index] = new IFSierraFilter(context);
-                    break;
-                case 6:
-                    filters[index] = new IFLomofiFilter(context);
-                    break;
-                case 7:
-                    filters[index] = new IFEarlybirdFilter(context);
-                    break;
-                case 8:
-                    filters[index] = new IFSutroFilter(context);
-                    break;
-                case 9:
-                    filters[index] = new IFToasterFilter(context);
-                    break;
-                case 10:
-                    filters[index] = new IFBrannanFilter(context);
-                    break;
-                case 11:
-                    filters[index] = new IFInkwellFilter(context);
-                    break;
-                case 12:
-                    filters[index] = new IFWaldenFilter(context);
-                    break;
-                case 13:
-                    filters[index] = new IFHefeFilter(context);
-                    break;
-                case 14:
-                    filters[index] = new IFValenciaFilter(context);
-                    break;
-                case 15:
-                    filters[index] = new IFNashvilleFilter(context);
-                    break;
-                case 16:
-                    filters[index] = new IF1977Filter(context);
-                    break;
-                case 17:
-                    filters[index] = new IFLordKelvinFilter(context);
-                    break;
-            }
-        } catch (Throwable e) {
-        }
-        return filters[index];
-    }
-
-    public static void destroyFilters() {
-        if (filters != null) {
-            for (int i = 0; i < filters.length; i++) {
-                try {
-                    if (filters[i] != null) {
-                        filters[i].destroy();
-                        filters[i] = null;
-                    }
-                } catch (Throwable e) {
-                }
-            }
-        }
-    }
+public abstract class InstaFilter extends GPUImageFilter {
 
     protected static final String VERTEX_SHADER = "attribute vec4 position;\n" +
             " attribute vec4 inputTextureCoordinate;\n" +
@@ -138,15 +32,15 @@ public class InstaFilter extends GPUImageFilter {
             "    textureCoordinate = inputTextureCoordinate.xy;\n" +
             " }\n";
 
-    private int [] GL_TEXTURES = { GLES20.GL_TEXTURE3, GLES20.GL_TEXTURE4, GLES20.GL_TEXTURE5,
+    protected int [] GL_TEXTURES = { GLES20.GL_TEXTURE3, GLES20.GL_TEXTURE4, GLES20.GL_TEXTURE5,
                                     GLES20.GL_TEXTURE6, GLES20.GL_TEXTURE7, GLES20.GL_TEXTURE8 };
 
     protected int textureNum; //MAX 6
     protected int [] coordinateAttributes;
-    int [] inputTextureUniforms;
-    int [] sourceTextures;
-    ByteBuffer[] coordinatesBuffers;
-    Bitmap[] bitmaps;
+    protected int [] inputTextureUniforms;
+    protected int [] sourceTextures;
+    protected ByteBuffer[] coordinatesBuffers;
+    protected Bitmap[] bitmaps;
 
     public InstaFilter(String fragmentShader, int textures) {
         this(VERTEX_SHADER, fragmentShader, textures);

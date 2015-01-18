@@ -28,6 +28,8 @@ repositories {
 dependencies {
     compile 'com.android.support:support-v4:20.0.0'
     compile 'com.android.support:appcompat-v7:21.0.+'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.jakewharton:butterknife:6.0.0'
+    compile 'com.squareup.picasso:picasso:2.4.0'
     compile project(':lib')
 }
