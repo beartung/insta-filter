@@ -2,6 +2,13 @@
 
 ![Gif](https://github.com/beartung/insta-filter/raw/master/instafilter.gif)
 
+Inspired by diwu/InstaFilters, ported to android using GpuImage.
+
+## Requirements
+
+* Android 2.2 or higher (OpenGL ES 2.0)
+* [android-gpuimage](https://github.com/CyberAgent/android-gpuimage)
+
 ## Sample Application
 The sample application (the source is in the repository) has been published onto Google Play for easy access:
 
